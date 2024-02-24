@@ -1,15 +1,16 @@
+import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 import { SpotifyService } from 'src/app/services/spotify.service';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
-import { NgFor } from '@angular/common';
+import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.component';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [MenuButtonComponent, FontAwesomeModule, NgFor],
+  imports: [MenuButtonComponent, FaIconComponent, NgFor, UserFooterComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
@@ -22,9 +23,7 @@ export class SidebarComponent {
   selectedMenu = 'Home';
   playlists: IPlaylist[] = [];
 
-  constructor(private spotifyService: SpotifyService) {}
-
-  ngOnInit() {
+  constructor(private spotifyService: SpotifyService) {
     this.getPlaylists();
   }
 

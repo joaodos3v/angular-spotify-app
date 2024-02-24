@@ -10,10 +10,7 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private spotifyService: SpotifyService, private router: Router) {}
-
-  // Note: executa toda vez que o componente é montado [READ]
-  ngOnInit(): void {
+  constructor(private spotifyService: SpotifyService, private router: Router) {
     this.checkTokenUrlCallback();
   }
 

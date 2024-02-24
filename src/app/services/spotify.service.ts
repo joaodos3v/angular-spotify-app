@@ -4,6 +4,8 @@ import { IUser } from 'src/app/interfaces/IUser';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 import { SpotifyConfiguration } from 'src/environments/environment';
 import { convertSportifyPlaylistToCustomPlaylist, convertSportifyUserToCustomUser } from 'src/app/common/spotifyHelper';
+import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +14,7 @@ export class SpotifyService {
   user: IUser;
   spotifyAPI: Spotify.SpotifyWebApiJs = null;
 
-  constructor() {
+  constructor(private router: Router) {
     this.spotifyAPI = new Spotify();
   }
 
@@ -69,5 +71,10 @@ export class SpotifyService {
 
     // Note: mesma coisa que fazer o "map completo"
     return playlists.items.map(convertSportifyPlaylistToCustomPlaylist);
+  }
+
+  logout() {
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

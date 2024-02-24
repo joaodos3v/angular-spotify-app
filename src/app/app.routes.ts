@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthenticatedGuard } from './guards/Authenticated.guard';
 
 export const AppRoutes: Routes = [
   {
@@ -9,6 +10,7 @@ export const AppRoutes: Routes = [
   {
     path: 'player',
     loadChildren: () => import('./pages/player/player.module').then((m) => m.PlayerModule),
+    canMatch: [AuthenticatedGuard],
   },
   {
     path: 'login',

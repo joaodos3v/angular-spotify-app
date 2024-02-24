@@ -1,9 +1,9 @@
 import Spotify from 'spotify-web-api-js';
 import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/interfaces/IUser';
+import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 import { SpotifyConfiguration } from 'src/environments/environment';
-import { convertSportifyUserToCustomUser } from 'src/app/common/spotifyHelper';
-
+import { convertSportifyPlaylistToCustomPlaylist, convertSportifyUserToCustomUser } from 'src/app/common/spotifyHelper';
 @Injectable({
   providedIn: 'root',
 })
@@ -62,5 +62,12 @@ export class SpotifyService {
   setAccessToken(token: string) {
     this.spotifyAPI.setAccessToken(token);
     localStorage.setItem('token', token);
+  }
+
+  async getUserPlaylists(offset = 0, limit = 50): Promise<IPlaylist[]> {
+    const playlists = await this.spotifyAPI.getUserPlaylists(this.user.id, { offset, limit });
+
+    // Note: mesma coisa que fazer o "map completo"
+    return playlists.items.map(convertSportifyPlaylistToCustomPlaylist);
   }
 }

@@ -2,6 +2,33 @@
   <span class="titulo-bg mt-4"> Seu Top Artista </span>
 
   <app-top-artist class="mt-2 d-block"></app-top-artist>
+
+  <span class="titulo-bg mt-4"> Músicas Curtidas </span>
+
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th class="w-5">#</th>
+        <th class="w-35">Titulo</th>
+        <th class="w-30">Artista</th>
+        <th class="w-10 direita">Tempo</th>
+        <th class="w-20">Album</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (music of musics; track $index) {
+      <tr>
+        <td>
+          <fa-icon class="play" [icon]="playIcon"></fa-icon>
+        </td>
+        <td>{{ music.title }}</td>
+        <td>{{ getArtists(music) }}</td>
+        <td class="direita">{{ music.time }}</td>
+        <td>{{ music.album.name }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
 </div>
 
-<div class="painel-direito"></div>
+<app-right-panel class="painel-direito"></app-right-panel>

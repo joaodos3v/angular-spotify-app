@@ -1,9 +1,9 @@
 import { IUser } from 'src/app/interfaces/IUser';
 import { addMilliseconds, format } from 'date-fns';
 import { IMusic } from 'src/app/interfaces/IMusic';
-import { newMusic } from 'src/app/common/factories';
 import { IArtist } from 'src/app/interfaces/IArtist';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { newMusic, newPlaylist } from 'src/app/common/factories';
 
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): IUser {
   return {
@@ -18,6 +18,19 @@ export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.Pla
     id: playlist.id,
     name: playlist.name,
     imageUrl: playlist.images.pop()?.url,
+  };
+}
+
+export function convertSportifyPlaylistTracksToCustomPlaylist(playlist: SpotifyApi.SinglePlaylistResponse): IPlaylist {
+  if (!playlist) {
+    return newPlaylist();
+  }
+
+  return {
+    id: playlist.id,
+    name: playlist.name,
+    imageUrl: playlist.images.shift()?.url,
+    musics: [],
   };
 }
 

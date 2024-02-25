@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/interfaces/IUser';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 import { IArtist } from 'src/app/interfaces/IArtist';
+import { IMusic } from 'src/app/interfaces/IMusic';
 import { SpotifyConfiguration } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import {
   convertSportifyPlaylistToCustomPlaylist,
   convertSportifyUserToCustomUser,
   convertSpotifyArtistToCustomArtist,
+  convertSpotifyTrackToCustomMusic,
 } from 'src/app/common/spotifyHelper';
 
 @Injectable({
@@ -81,6 +83,11 @@ export class SpotifyService {
   async getTopArtists(limit = 10): Promise<IArtist[]> {
     const artists = await this.spotifyAPI.getMyTopArtists({ limit });
     return artists.items.map(convertSpotifyArtistToCustomArtist);
+  }
+
+  async getMusics(offset = 0, limit = 50): Promise<IMusic[]> {
+    const musics = await this.spotifyAPI.getMySavedTracks({ offset, limit });
+    return musics.items.map((music) => convertSpotifyTrackToCustomMusic(music.track));
   }
 
   logout() {

@@ -100,6 +100,14 @@ export class SpotifyService {
     return convertSpotifyTrackToCustomMusic(spotifyMusic.item);
   }
 
+  async backMusic() {
+    await this.spotifyAPI.skipToPrevious();
+  }
+
+  async nextMusic() {
+    await this.spotifyAPI.skipToNext();
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);

@@ -36,4 +36,12 @@ export class PlayerService {
   setCurrentMusic(music: IMusic) {
     this.currentMusic.next(music);
   }
+
+  back() {
+    this.spotifyService.backMusic();
+  }
+
+  next() {
+    this.spotifyService.nextMusic();
+  }
 }

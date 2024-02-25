@@ -8,6 +8,7 @@ import { SpotifyConfiguration } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import {
   convertSportifyPlaylistToCustomPlaylist,
+  convertSportifyPlaylistTracksToCustomPlaylist,
   convertSportifyUserToCustomUser,
   convertSpotifyArtistToCustomArtist,
   convertSpotifyTrackToCustomMusic,
@@ -78,6 +79,23 @@ export class SpotifyService {
 
     // Note: mesma coisa que fazer o "map completo"
     return playlists.items.map(convertSportifyPlaylistToCustomPlaylist);
+  }
+
+  async getPlaylistMusics(playlistId: string, offset = 0, limit = 50) {
+    const spotifyPlaylist = await this.spotifyAPI.getPlaylist(playlistId);
+
+    if (!spotifyPlaylist) {
+      return null;
+    }
+
+    const playlist = convertSportifyPlaylistTracksToCustomPlaylist(spotifyPlaylist);
+    const spotifyMusics = await this.spotifyAPI.getPlaylistTracks(playlistId, { offset, limit });
+
+    playlist.musics = spotifyMusics.items.map((music) =>
+      convertSpotifyTrackToCustomMusic(music.track as SpotifyApi.TrackObjectFull)
+    );
+
+    return playlist;
   }
 
   async getTopArtists(limit = 10): Promise<IArtist[]> {

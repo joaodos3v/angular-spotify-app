@@ -1,1 +1,7 @@
-<p>recent-searches works!</p>
+<input type="text" placeholder="Pesquisar" [(ngModel)]="searchInput" (keyup.Enter)="doSearch()" />
+
+<div class="sugestoes flex">
+  @for (search of recentSearches; track $index) {
+  <span (click)="setSearchValue(search)">{{ search }}</span>
+  }
+</div>

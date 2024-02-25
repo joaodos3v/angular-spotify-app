@@ -27,7 +27,7 @@
     flex-wrap: wrap;
 
     span {
-      background-color: $branco;
+      background-color: $white;
       margin-right: 5px;
       padding: 5px 10px;
       color: $black-transparency-70;
@@ -39,7 +39,7 @@
 
       &:hover {
         background-color: rgba($primary, 0.8);
-        color: $branco;
+        color: $white;
       }
     }
   }

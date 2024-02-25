@@ -1,6 +1,7 @@
 import { IUser } from 'src/app/interfaces/IUser';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { IMusic } from 'src/app/interfaces/IMusic';
 import { IArtist } from 'src/app/interfaces/IArtist';
+import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): IUser {
   return {
@@ -25,3 +26,5 @@ export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistOb
     imageUrl: playlist.images.sort((a, b) => a.width - b.width).pop()?.url,
   };
 }
+
+export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): IMusic {}

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { IMusic } from 'src/app/interfaces/IMusic';
 import { newMusic } from 'src/app/common/factories';
+import { Component, OnDestroy } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { PlayerService } from 'src/app/services/player.service';
 import { SpotifyService } from 'src/app/services/spotify.service';
@@ -15,15 +16,22 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy {
   musics: IMusic[] = [];
   currentMusic: IMusic = newMusic();
+
+  subs: Subscription[] = [];
 
   playIcon = faPlay;
 
   constructor(private spotifyService: SpotifyService, private playerService: PlayerService) {
     this.getMusics();
     this.getCurrentMusic();
+  }
+
+  ngOnDestroy(): void {
+    // Note: garante que não teremos memory leak, pois nos desinscrevemos de todos os subscriptions
+    this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   async getMusics() {
@@ -39,8 +47,10 @@ export class HomeComponent {
   }
 
   getCurrentMusic() {
-    this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.playerService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
+
+    this.subs.push(sub);
   }
 }

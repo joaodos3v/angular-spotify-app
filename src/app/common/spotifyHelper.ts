@@ -35,7 +35,7 @@ export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackO
   };
 
   return {
-    id: spotifyTrack.id,
+    id: spotifyTrack.uri,
     title: spotifyTrack.name,
     album: {
       id: spotifyTrack.album.id,

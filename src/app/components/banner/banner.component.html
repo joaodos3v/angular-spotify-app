@@ -1,1 +1,9 @@
-<p>banner works!</p>
+<div class="card p-20">
+  <div class="artista flex">
+    <span class="titulo-bg">
+      {{ text }}
+    </span>
+  </div>
+
+  <div class="image" [style.background-image]="'url(' + imageUrl + ')'"></div>
+</div>

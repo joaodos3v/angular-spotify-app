@@ -1,7 +1,7 @@
 export interface IMusic {
   id: string;
   title: string;
-  artist: {
+  artists: {
     id: string;
     name: string;
   }[];

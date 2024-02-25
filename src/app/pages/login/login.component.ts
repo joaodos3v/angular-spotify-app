@@ -22,7 +22,7 @@ export class LoginComponent {
     const token = this.spotifyService.getTokenFromUrlCallback();
     if (!!token) {
       this.spotifyService.setAccessToken(token);
-      this.router.navigate(['/player']);
+      this.router.navigate(['/player/home']);
     }
   }
 }

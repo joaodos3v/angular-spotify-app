@@ -6,6 +6,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,12 +24,13 @@ export class SidebarComponent {
   selectedMenu = 'Home';
   playlists: IPlaylist[] = [];
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private spotifyService: SpotifyService, private router: Router) {
     this.getPlaylists();
   }
 
   buttonClick(menuTitle: string) {
     this.selectedMenu = menuTitle;
+    this.router.navigateByUrl('player/home');
   }
 
   async getPlaylists() {

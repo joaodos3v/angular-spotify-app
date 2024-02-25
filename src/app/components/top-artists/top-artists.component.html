@@ -1,0 +1,5 @@
+<span class="titulo-md">Top 5 Artistas</span>
+
+@for (artist of artists; track $index) {
+<app-artist-item [imageSrc]="artist.imageUrl">{{ artist.name }}</app-artist-item>
+}

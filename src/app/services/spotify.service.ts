@@ -2,9 +2,14 @@ import Spotify from 'spotify-web-api-js';
 import { Injectable } from '@angular/core';
 import { IUser } from 'src/app/interfaces/IUser';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { IArtist } from 'src/app/interfaces/IArtist';
 import { SpotifyConfiguration } from 'src/environments/environment';
-import { convertSportifyPlaylistToCustomPlaylist, convertSportifyUserToCustomUser } from 'src/app/common/spotifyHelper';
 import { Router } from '@angular/router';
+import {
+  convertSportifyPlaylistToCustomPlaylist,
+  convertSportifyUserToCustomUser,
+  convertSpotifyArtistToCustomArtist,
+} from 'src/app/common/spotifyHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -71,6 +76,11 @@ export class SpotifyService {
 
     // Note: mesma coisa que fazer o "map completo"
     return playlists.items.map(convertSportifyPlaylistToCustomPlaylist);
+  }
+
+  async getTopArtists(limit = 10): Promise<IArtist[]> {
+    const artists = await this.spotifyAPI.getMyTopArtists({ limit });
+    return artists.items.map(convertSpotifyArtistToCustomArtist);
   }
 
   logout() {

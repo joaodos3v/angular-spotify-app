@@ -95,6 +95,11 @@ export class SpotifyService {
     await this.spotifyAPI.skipToNext();
   }
 
+  async getCurrentMusic(): Promise<IMusic> {
+    const spotifyMusic = await this.spotifyAPI.getMyCurrentPlayingTrack();
+    return convertSpotifyTrackToCustomMusic(spotifyMusic.item);
+  }
+
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);

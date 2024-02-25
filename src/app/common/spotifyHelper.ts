@@ -1,8 +1,9 @@
 import { IUser } from 'src/app/interfaces/IUser';
+import { addMilliseconds, format } from 'date-fns';
 import { IMusic } from 'src/app/interfaces/IMusic';
+import { newMusic } from 'src/app/common/factories';
 import { IArtist } from 'src/app/interfaces/IArtist';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
-import { addMilliseconds, format } from 'date-fns';
 
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): IUser {
   return {
@@ -29,6 +30,10 @@ export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistOb
 }
 
 export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): IMusic {
+  if (!spotifyTrack) {
+    return newMusic();
+  }
+
   const msToMinutes = (ms: number) => {
     const date = addMilliseconds(new Date(0), ms);
     return format(date, 'mm:ss');

@@ -27,4 +27,19 @@ export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistOb
   };
 }
 
-export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): IMusic {}
+export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): IMusic {
+  return {
+    id: spotifyTrack.id,
+    title: spotifyTrack.name,
+    album: {
+      id: spotifyTrack.album.id,
+      imageUrl: spotifyTrack.album.images.shift().url,
+      name: spotifyTrack.album.name,
+    },
+    artists: spotifyTrack.artists.map((artist) => ({
+      id: artist.id,
+      name: artist.name,
+    })),
+    time: spotifyTrack.duration_ms.toString(),
+  };
+}

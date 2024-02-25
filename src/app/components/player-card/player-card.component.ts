@@ -35,4 +35,12 @@ export class PlayerCardComponent implements OnDestroy {
 
     this.subs.push(sub);
   }
+
+  backMusic() {
+    this.playerService.back();
+  }
+
+  nextMusic() {
+    this.playerService.next();
+  }
 }

@@ -37,11 +37,11 @@ export class PlayerService {
     this.currentMusic.next(music);
   }
 
-  back() {
-    this.spotifyService.backMusic();
+  async back() {
+    await this.spotifyService.backMusic();
   }
 
-  next() {
-    this.spotifyService.nextMusic();
+  async next() {
+    await this.spotifyService.nextMusic();
   }
 }

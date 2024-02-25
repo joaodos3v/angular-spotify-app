@@ -4,8 +4,8 @@
   <div class="controles">
     <span> {{ currentMusic.title }} </span>
     <div class="botoes">
-      <fa-icon [icon]="previousIcon"> </fa-icon>
-      <fa-icon [icon]="nextIcon"> </fa-icon>
+      <fa-icon [icon]="previousIcon" (click)="backMusic()"> </fa-icon>
+      <fa-icon [icon]="nextIcon" (click)="nextMusic()"> </fa-icon>
     </div>
   </div>
 </div>

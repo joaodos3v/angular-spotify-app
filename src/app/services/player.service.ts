@@ -4,7 +4,7 @@ import { SpotifyService } from './spotify.service';
 import { IMusic } from 'src/app/interfaces/IMusic';
 import { newMusic } from 'src/app/common/factories';
 
-const THREE_SECONDS_IN_MS = 3000;
+const THREE_SECONDS_IN_MS = 5000;
 
 @Injectable({
   providedIn: 'root',

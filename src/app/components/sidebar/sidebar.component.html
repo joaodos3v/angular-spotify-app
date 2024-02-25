@@ -33,7 +33,7 @@
       <app-menu-button
         [description]="playlist.name"
         [selected]="selectedMenu === playlist.id"
-        (click)="buttonClick(playlist.id)"
+        (click)="goToPlaylist(playlist.id)"
       >
         <fa-icon [icon]="playlistIcon"></fa-icon>
       </app-menu-button>

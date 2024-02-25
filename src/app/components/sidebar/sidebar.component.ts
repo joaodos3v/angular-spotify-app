@@ -8,8 +8,6 @@ import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.component';
 
-const FIXED_MENU_ROUTES = ['Home', 'Pesquisar', 'Artistas'];
-
 @Component({
   selector: 'app-sidebar',
   standalone: true,
@@ -32,12 +30,12 @@ export class SidebarComponent {
 
   buttonClick(menu: string) {
     this.selectedMenu = menu;
+    this.router.navigateByUrl('player/home');
+  }
 
-    if (FIXED_MENU_ROUTES.includes(menu)) {
-      this.router.navigateByUrl('player/home');
-    } else {
-      this.router.navigateByUrl(`player/playlist/custom/${menu}`);
-    }
+  goToPlaylist(playlistId: string) {
+    this.selectedMenu = playlistId;
+    this.router.navigateByUrl(`player/playlist/custom/${playlistId}`);
   }
 
   async getPlaylists() {

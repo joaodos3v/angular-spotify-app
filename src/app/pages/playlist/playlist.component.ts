@@ -1,14 +1,19 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { newMusic } from 'src/app/common/factories';
-import { IMusic } from 'src/app/interfaces/IMusic';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { IMusic } from 'src/app/interfaces/IMusic';
+import { newMusic } from 'src/app/common/factories';
+import { Component, OnDestroy } from '@angular/core';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { PlayerService } from 'src/app/services/player.service';
+import { SpotifyService } from 'src/app/services/spotify.service';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { BannerComponent } from 'src/app/components/banner/banner.component';
+import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
 @Component({
   selector: 'app-playlist',
   standalone: true,
-  imports: [],
+  imports: [BannerComponent, RightPanelComponent, FaIconComponent],
   templateUrl: './playlist.component.html',
   styleUrl: './playlist.component.scss',
 })
@@ -17,18 +22,32 @@ export class PlaylistComponent implements OnDestroy {
 
   bannerText = '';
   bannerImageUrl = '';
+  title = '';
 
   musics: IMusic[] = [];
   currentMusic: IMusic = newMusic();
 
   subs: Subscription[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private spotifyService: SpotifyService,
+    private playerService: PlayerService
+  ) {
     this.getMusics();
+    this.getCurrentMusic();
   }
 
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
+  }
+
+  getCurrentMusic() {
+    const sub = this.playerService.currentMusic.subscribe((music) => {
+      this.currentMusic = music;
+    });
+
+    this.subs.push(sub);
   }
 
   getMusics() {
@@ -51,7 +70,28 @@ export class PlaylistComponent implements OnDestroy {
     }
   }
 
-  async getPlaylistData(playlistId: string) {}
+  setPageData(bannerText: string, bannerImageUrl: string, musics: IMusic[]) {
+    this.musics = musics;
+    this.bannerImageUrl = bannerImageUrl;
+    this.bannerText = bannerText;
+  }
 
-  async getArtistData(artistId: string) {}
+  async getPlaylistData(playlistId: string) {
+    const playlist = await this.spotifyService.getPlaylistMusics(playlistId);
+    this.setPageData(playlist.name, playlist.imageUrl, playlist.musics);
+    this.title = `Músicas de: ${playlist.name}`;
+  }
+
+  async getArtistData(artistId: string) {
+    // TODO
+  }
+
+  async playMusic(music: IMusic) {
+    await this.spotifyService.playMusic(music.id);
+    this.playerService.setCurrentMusic(music);
+  }
+
+  getArtists(music: IMusic) {
+    return music.artists.map((artist) => artist.name).join(', ');
+  }
 }

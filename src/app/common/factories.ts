@@ -6,6 +6,7 @@ export function newArtist(): IArtist {
     id: '',
     name: '',
     imageUrl: '',
+    musics: [],
   };
 }
 

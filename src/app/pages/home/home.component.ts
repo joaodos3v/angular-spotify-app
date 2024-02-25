@@ -44,6 +44,7 @@ export class HomeComponent implements OnDestroy {
 
   async playMusic(music: IMusic) {
     await this.spotifyService.playMusic(music.id);
+    this.playerService.setCurrentMusic(music);
   }
 
   getCurrentMusic() {

@@ -17,6 +17,10 @@ export class PlayerService {
 
   async getCurrentMusicFromSpotify() {
     const currentMusic = await this.spotifyService.getCurrentMusic();
-    this.currentMusic.next(currentMusic);
+    this.setCurrentMusic(currentMusic);
+  }
+
+  setCurrentMusic(music: IMusic) {
+    this.currentMusic.next(music);
   }
 }

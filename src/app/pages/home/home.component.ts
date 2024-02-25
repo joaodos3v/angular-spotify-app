@@ -29,4 +29,10 @@ export class HomeComponent {
   getArtists(music: IMusic) {
     return music.artists.map((artist) => artist.name).join(', ');
   }
+
+  async playMusic(music: IMusic) {
+    /* eslint-disable no-console */
+    console.log('## CL ## music.id', music.id);
+    await this.spotifyService.playMusic(music.id);
+  }
 }

@@ -17,7 +17,7 @@
     </thead>
     <tbody>
       @for (music of musics; track $index) {
-      <tr>
+      <tr (click)="playMusic(music)">
         <td>
           <fa-icon class="play" [icon]="playIcon"></fa-icon>
         </td>

@@ -1,4 +1,5 @@
 import { NgFor } from '@angular/common';
+import { Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { IPlaylist } from 'src/app/interfaces/IPlaylist';
 import { SpotifyService } from 'src/app/services/spotify.service';
@@ -6,7 +7,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.component';
-import { Router } from '@angular/router';
+
+const FIXED_MENU_ROUTES = ['Home', 'Pesquisar', 'Artistas'];
 
 @Component({
   selector: 'app-sidebar',
@@ -28,9 +30,14 @@ export class SidebarComponent {
     this.getPlaylists();
   }
 
-  buttonClick(menuTitle: string) {
-    this.selectedMenu = menuTitle;
-    this.router.navigateByUrl('player/home');
+  buttonClick(menu: string) {
+    this.selectedMenu = menu;
+
+    if (FIXED_MENU_ROUTES.includes(menu)) {
+      this.router.navigateByUrl('player/home');
+    } else {
+      this.router.navigateByUrl(`player/playlist/custom/${menu}`);
+    }
   }
 
   async getPlaylists() {

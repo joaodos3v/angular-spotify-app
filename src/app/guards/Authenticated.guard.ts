@@ -1,6 +1,6 @@
+import { SessionService } from 'src/app/services/session.service';
 import { inject } from '@angular/core';
 import { Router, type CanMatchFn } from '@angular/router';
-import { OldSpotifyService } from 'src/app/services/old-spotify.service';
 
 const notAuthenticated = (router: Router) => {
   localStorage.clear();
@@ -17,10 +17,10 @@ export const AuthenticatedGuard: CanMatchFn = (route, state) => {
     return notAuthenticated(router);
   }
 
-  const oldSpotifyService = inject(OldSpotifyService);
+  const sessionService = inject(SessionService);
 
   return new Promise(async (res) => {
-    const hasCreatedUser = await oldSpotifyService.startUser();
+    const hasCreatedUser = await sessionService.startUser();
     if (hasCreatedUser) {
       res(true);
     } else {

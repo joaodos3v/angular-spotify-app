@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { OldSpotifyService } from 'src/app/services/old-spotify.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-login',
@@ -10,18 +10,18 @@ import { OldSpotifyService } from 'src/app/services/old-spotify.service';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  constructor(private oldSpotifyService: OldSpotifyService, private router: Router) {
+  constructor(private sessionService: SessionService, private router: Router) {
     this.checkTokenUrlCallback();
   }
 
   openLoginPage() {
-    window.location.href = this.oldSpotifyService.getLoginUrl();
+    window.location.href = this.sessionService.getLoginUrl();
   }
 
   checkTokenUrlCallback() {
-    const token = this.oldSpotifyService.getTokenFromUrlCallback();
+    const token = this.sessionService.getTokenFromUrlCallback();
     if (!!token) {
-      this.oldSpotifyService.setAccessToken(token);
+      this.sessionService.setAccessToken(token);
       this.router.navigate(['/player/home']);
     }
   }

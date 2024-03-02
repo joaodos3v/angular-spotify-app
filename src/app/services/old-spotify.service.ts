@@ -65,12 +65,4 @@ export class OldSpotifyService {
     await this.spotifyAPI.queue(musicId);
     await this.spotifyAPI.skipToNext();
   }
-
-  async backMusic() {
-    await this.spotifyAPI.skipToPrevious();
-  }
-
-  async nextMusic() {
-    await this.spotifyAPI.skipToNext();
-  }
 }

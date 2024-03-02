@@ -1,8 +1,8 @@
-import { User } from '../models/user.model';
-import { Music } from '../models/music.model';
-import { Artist } from '../models/artist.model';
+import { User } from 'src/app/models/user.model';
+import { Music } from 'src/app/models/music.model';
 import { addMilliseconds, format } from 'date-fns';
-import { Playlist } from '../models/playlist.model';
+import { Artist } from 'src/app/models/artist.model';
+import { Playlist } from 'src/app/models/playlist.model';
 import { newMusic, newPlaylist } from 'src/app/common/factories';
 
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): User {

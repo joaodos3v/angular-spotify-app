@@ -1,6 +1,6 @@
-import { Music } from '../models/music.model';
-import { Artist } from '../models/artist.model';
-import { Playlist } from '../models/playlist.model';
+import { Music } from 'src/app/models/music.model';
+import { Artist } from 'src/app/models/artist.model';
+import { Playlist } from 'src/app/models/playlist.model';
 
 export function newArtist(): Artist {
   return {

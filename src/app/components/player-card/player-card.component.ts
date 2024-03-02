@@ -5,8 +5,7 @@ import { Component, OnDestroy, inject } from '@angular/core';
 import { OldPlayerService } from 'src/app/services/old-player.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
-
-import { PLAYER_PROVIDER, Player } from 'src/app/providers/player.provider';
+import { SpotifyPlayerService } from 'src/app/adapters/secondary/spotify/services/spotify-player.service';
 
 @Component({
   selector: 'app-player-card',
@@ -16,7 +15,7 @@ import { PLAYER_PROVIDER, Player } from 'src/app/providers/player.provider';
   styleUrl: './player-card.component.scss',
 })
 export class PlayerCardComponent implements OnDestroy {
-  playerService: Player = inject(PLAYER_PROVIDER);
+  playerService = inject(SpotifyPlayerService);
 
   previousIcon = faStepBackward;
   nextIcon = faStepForward;
@@ -28,6 +27,7 @@ export class PlayerCardComponent implements OnDestroy {
   constructor(private oldPlayerService: OldPlayerService) {
     this.getCurrentMusic();
   }
+
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
@@ -44,7 +44,7 @@ export class PlayerCardComponent implements OnDestroy {
     this.playerService.back();
   }
 
-  nextMusic() {
-    this.playerService.next();
+  async nextMusic() {
+    await this.playerService.next();
   }
 }

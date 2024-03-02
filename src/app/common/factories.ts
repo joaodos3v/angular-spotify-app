@@ -1,8 +1,8 @@
-import { IMusic } from 'src/app/interfaces/IMusic';
-import { IArtist } from 'src/app/interfaces/IArtist';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { Music } from '../models/music.model';
+import { Artist } from '../models/artist.model';
+import { Playlist } from '../models/playlist.model';
 
-export function newArtist(): IArtist {
+export function newArtist(): Artist {
   return {
     id: '',
     name: '',
@@ -11,7 +11,7 @@ export function newArtist(): IArtist {
   };
 }
 
-export function newMusic(): IMusic {
+export function newMusic(): Music {
   return {
     id: '',
     title: '',
@@ -25,7 +25,7 @@ export function newMusic(): IMusic {
   };
 }
 
-export function newPlaylist(): IPlaylist {
+export function newPlaylist(): Playlist {
   return {
     id: '',
     name: '',

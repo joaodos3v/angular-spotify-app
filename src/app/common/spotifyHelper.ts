@@ -1,11 +1,11 @@
-import { IUser } from 'src/app/interfaces/IUser';
+import { User } from '../models/user.model';
+import { Music } from '../models/music.model';
+import { Artist } from '../models/artist.model';
 import { addMilliseconds, format } from 'date-fns';
-import { IMusic } from 'src/app/interfaces/IMusic';
-import { IArtist } from 'src/app/interfaces/IArtist';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { Playlist } from '../models/playlist.model';
 import { newMusic, newPlaylist } from 'src/app/common/factories';
 
-export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): IUser {
+export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): User {
   return {
     id: user.id,
     name: user.display_name,
@@ -13,7 +13,7 @@ export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersPro
   };
 }
 
-export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.PlaylistObjectSimplified): IPlaylist {
+export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.PlaylistObjectSimplified): Playlist {
   return {
     id: playlist.id,
     name: playlist.name,
@@ -21,7 +21,7 @@ export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.Pla
   };
 }
 
-export function convertSportifyPlaylistTracksToCustomPlaylist(playlist: SpotifyApi.SinglePlaylistResponse): IPlaylist {
+export function convertSportifyPlaylistTracksToCustomPlaylist(playlist: SpotifyApi.SinglePlaylistResponse): Playlist {
   if (!playlist) {
     return newPlaylist();
   }
@@ -34,7 +34,7 @@ export function convertSportifyPlaylistTracksToCustomPlaylist(playlist: SpotifyA
   };
 }
 
-export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistObjectFull): IArtist {
+export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistObjectFull): Artist {
   return {
     id: playlist.id,
     name: playlist.name,
@@ -42,7 +42,7 @@ export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistOb
   };
 }
 
-export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): IMusic {
+export function convertSpotifyTrackToCustomMusic(spotifyTrack: SpotifyApi.TrackObjectFull): Music {
   if (!spotifyTrack) {
     return newMusic();
   }

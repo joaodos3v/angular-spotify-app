@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { IMusic } from 'src/app/interfaces/IMusic';
+import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -24,8 +24,8 @@ export class PlaylistComponent implements OnDestroy {
   bannerImageUrl = '';
   title = '';
 
-  musics: IMusic[] = [];
-  currentMusic: IMusic = newMusic();
+  musics: Music[] = [];
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 
@@ -70,7 +70,7 @@ export class PlaylistComponent implements OnDestroy {
     }
   }
 
-  setPageData(bannerText: string, bannerImageUrl: string, musics: IMusic[]) {
+  setPageData(bannerText: string, bannerImageUrl: string, musics: Music[]) {
     this.musics = musics;
     this.bannerImageUrl = bannerImageUrl;
     this.bannerText = bannerText;
@@ -86,12 +86,12 @@ export class PlaylistComponent implements OnDestroy {
     // TODO
   }
 
-  async playMusic(music: IMusic) {
+  async playMusic(music: Music) {
     await this.spotifyService.playMusic(music.id);
     this.playerService.setCurrentMusic(music);
   }
 
-  getArtists(music: IMusic) {
+  getArtists(music: Music) {
     return music.artists.map((artist) => artist.name).join(', ');
   }
 }

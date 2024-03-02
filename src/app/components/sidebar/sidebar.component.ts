@@ -1,7 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
+import { Playlist } from 'src/app/models/playlist.model';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -22,7 +22,7 @@ export class SidebarComponent {
   playlistIcon = faMusic;
 
   selectedMenu = 'Home';
-  playlists: IPlaylist[] = [];
+  playlists: Playlist[] = [];
 
   constructor(private spotifyService: SpotifyService, private router: Router) {
     this.getPlaylists();

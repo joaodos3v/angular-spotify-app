@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Music } from '../models/music.model';
 import { SpotifyService } from './spotify.service';
-import { IMusic } from 'src/app/interfaces/IMusic';
 import { newMusic } from 'src/app/common/factories';
 
 const THREE_SECONDS_IN_MS = 5000;
@@ -11,7 +11,7 @@ const THREE_SECONDS_IN_MS = 5000;
 })
 export class PlayerService {
   // Note: segundo o instrutor, BehaviorSubject é o mesmo que Subject, com a diferença que conseguimos definir o valor de início
-  currentMusic = new BehaviorSubject<IMusic>(newMusic());
+  currentMusic = new BehaviorSubject<Music>(newMusic());
 
   timerId: any = null;
 
@@ -33,7 +33,7 @@ export class PlayerService {
     }, THREE_SECONDS_IN_MS);
   }
 
-  setCurrentMusic(music: IMusic) {
+  setCurrentMusic(music: Music) {
     this.currentMusic.next(music);
   }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IUser } from 'src/app/interfaces/IUser';
+import { User } from 'src/app/models/user.model';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -12,7 +12,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
   styleUrl: './user-footer.component.scss',
 })
 export class UserFooterComponent {
-  user: IUser = null;
+  user: User = null;
   exitIcon = faSignOutAlt;
 
   constructor(private spotifyService: SpotifyService) {

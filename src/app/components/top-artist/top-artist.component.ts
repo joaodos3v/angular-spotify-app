@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { Artist } from 'src/app/models/artist.model';
 import { newArtist } from 'src/app/common/factories';
-import { IArtist } from 'src/app/interfaces/IArtist';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
@@ -11,8 +11,7 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   styleUrl: './top-artist.component.scss',
 })
 export class TopArtistComponent {
-  // Note: instrutor sugeriu fazer isso para não inicializar "artist" com null
-  topArtist: IArtist = newArtist();
+  topArtist: Artist = newArtist();
 
   constructor(private spotifyService: SpotifyService) {
     this.getArtist();

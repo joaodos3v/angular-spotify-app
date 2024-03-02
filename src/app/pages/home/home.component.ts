@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { IMusic } from 'src/app/interfaces/IMusic';
+import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -17,8 +17,8 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnDestroy {
-  musics: IMusic[] = [];
-  currentMusic: IMusic = newMusic();
+  musics: Music[] = [];
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 
@@ -38,11 +38,11 @@ export class HomeComponent implements OnDestroy {
     this.musics = await this.spotifyService.getMusics();
   }
 
-  getArtists(music: IMusic) {
+  getArtists(music: Music) {
     return music.artists.map((artist) => artist.name).join(', ');
   }
 
-  async playMusic(music: IMusic) {
+  async playMusic(music: Music) {
     await this.spotifyService.playMusic(music.id);
     this.playerService.setCurrentMusic(music);
   }

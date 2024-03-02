@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
+import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { IMusic } from 'src/app/interfaces/IMusic';
 import { Component, OnDestroy } from '@angular/core';
 import { PlayerService } from 'src/app/services/player.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -17,7 +17,7 @@ export class PlayerCardComponent implements OnDestroy {
   previousIcon = faStepBackward;
   nextIcon = faStepForward;
 
-  currentMusic: IMusic = newMusic();
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 

@@ -1,11 +1,11 @@
 import Spotify from 'spotify-web-api-js';
-import { Injectable } from '@angular/core';
-import { IUser } from 'src/app/interfaces/IUser';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
-import { IArtist } from 'src/app/interfaces/IArtist';
-import { IMusic } from 'src/app/interfaces/IMusic';
-import { SpotifyConfiguration } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import { Music } from 'src/app/models/music.model';
+import { Artist } from 'src/app/models/artist.model';
+import { Playlist } from 'src/app/models/playlist.model';
+import { SpotifyConfiguration } from 'src/environments/environment';
 import {
   convertSportifyPlaylistToCustomPlaylist,
   convertSportifyPlaylistTracksToCustomPlaylist,
@@ -19,7 +19,7 @@ import {
 })
 // Note: esse Service utiliza o padrão Singleton
 export class SpotifyService {
-  user: IUser;
+  user: User;
   spotifyAPI: Spotify.SpotifyWebApiJs = null;
 
   constructor(private router: Router) {
@@ -74,7 +74,7 @@ export class SpotifyService {
     localStorage.setItem('token', token);
   }
 
-  async getUserPlaylists(offset = 0, limit = 50): Promise<IPlaylist[]> {
+  async getUserPlaylists(offset = 0, limit = 50): Promise<Playlist[]> {
     const playlists = await this.spotifyAPI.getUserPlaylists(this.user.id, { offset, limit });
 
     // Note: mesma coisa que fazer o "map completo"
@@ -98,12 +98,12 @@ export class SpotifyService {
     return playlist;
   }
 
-  async getTopArtists(limit = 10): Promise<IArtist[]> {
+  async getTopArtists(limit = 10): Promise<Artist[]> {
     const artists = await this.spotifyAPI.getMyTopArtists({ limit });
     return artists.items.map(convertSpotifyArtistToCustomArtist);
   }
 
-  async getMusics(offset = 0, limit = 50): Promise<IMusic[]> {
+  async getMusics(offset = 0, limit = 50): Promise<Music[]> {
     const musics = await this.spotifyAPI.getMySavedTracks({ offset, limit });
     return musics.items.map((music) => convertSpotifyTrackToCustomMusic(music.track));
   }
@@ -113,7 +113,7 @@ export class SpotifyService {
     await this.spotifyAPI.skipToNext();
   }
 
-  async getCurrentMusic(): Promise<IMusic> {
+  async getCurrentMusic(): Promise<Music> {
     const spotifyMusic = await this.spotifyAPI.getMyCurrentPlayingTrack();
     return convertSpotifyTrackToCustomMusic(spotifyMusic.item);
   }

@@ -32,7 +32,7 @@ export class PlaylistComponent implements OnDestroy {
   constructor(
     private activatedRoute: ActivatedRoute,
     private spotifyService: SpotifyService,
-    private playerService: OldPlayerService
+    private oldPlayerService: OldPlayerService
   ) {
     this.getMusics();
     this.getCurrentMusic();
@@ -43,7 +43,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.oldPlayerService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 
@@ -88,7 +88,7 @@ export class PlaylistComponent implements OnDestroy {
 
   async playMusic(music: Music) {
     await this.spotifyService.playMusic(music.id);
-    this.playerService.setCurrentMusic(music);
+    this.oldPlayerService.setCurrentMusic(music);
   }
 
   getArtists(music: Music) {

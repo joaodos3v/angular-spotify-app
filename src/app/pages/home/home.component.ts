@@ -24,7 +24,7 @@ export class HomeComponent implements OnDestroy {
 
   playIcon = faPlay;
 
-  constructor(private spotifyService: SpotifyService, private playerService: OldPlayerService) {
+  constructor(private spotifyService: SpotifyService, private oldPlayerService: OldPlayerService) {
     this.getMusics();
     this.getCurrentMusic();
   }
@@ -44,11 +44,11 @@ export class HomeComponent implements OnDestroy {
 
   async playMusic(music: Music) {
     await this.spotifyService.playMusic(music.id);
-    this.playerService.setCurrentMusic(music);
+    this.oldPlayerService.setCurrentMusic(music);
   }
 
   getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.oldPlayerService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 

@@ -1,6 +1,6 @@
 import Spotify from 'spotify-web-api-js';
 import { Router } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { User } from 'src/app/models/user.model';
 import { Music } from 'src/app/models/music.model';
 import { Artist } from 'src/app/models/artist.model';
@@ -19,8 +19,9 @@ import {
 })
 // Note: esse Service utiliza o padrão Singleton
 export class SpotifyService {
-  user: User;
   spotifyAPI: Spotify.SpotifyWebApiJs = null;
+
+  user: User;
 
   constructor(private router: Router) {
     this.spotifyAPI = new Spotify();
@@ -108,14 +109,14 @@ export class SpotifyService {
     return musics.items.map((music) => convertSpotifyTrackToCustomMusic(music.track));
   }
 
-  async playMusic(musicId: string) {
-    await this.spotifyAPI.queue(musicId);
-    await this.spotifyAPI.skipToNext();
-  }
-
   async getCurrentMusic(): Promise<Music> {
     const spotifyMusic = await this.spotifyAPI.getMyCurrentPlayingTrack();
     return convertSpotifyTrackToCustomMusic(spotifyMusic.item);
+  }
+
+  async playMusic(musicId: string) {
+    await this.spotifyAPI.queue(musicId);
+    await this.spotifyAPI.skipToNext();
   }
 
   async backMusic() {

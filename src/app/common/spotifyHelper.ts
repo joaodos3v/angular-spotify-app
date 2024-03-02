@@ -18,6 +18,7 @@ export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.Pla
     id: playlist.id,
     name: playlist.name,
     imageUrl: playlist.images.pop()?.url,
+    musics: [],
   };
 }
 

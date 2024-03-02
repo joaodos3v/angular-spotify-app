@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy } from '@angular/core';
-import { PlayerService } from 'src/app/services/player.service';
+import { OldPlayerService } from 'src/app/services/old-player.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,7 +21,7 @@ export class PlayerCardComponent implements OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: OldPlayerService) {
     this.getCurrentMusic();
   }
   ngOnDestroy(): void {

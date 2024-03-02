@@ -3,7 +3,7 @@ import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { PlayerService } from 'src/app/services/player.service';
+import { OldPlayerService } from 'src/app/services/old-player.service';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
@@ -24,7 +24,7 @@ export class HomeComponent implements OnDestroy {
 
   playIcon = faPlay;
 
-  constructor(private spotifyService: SpotifyService, private playerService: PlayerService) {
+  constructor(private spotifyService: SpotifyService, private playerService: OldPlayerService) {
     this.getMusics();
     this.getCurrentMusic();
   }

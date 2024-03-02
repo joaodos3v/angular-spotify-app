@@ -9,7 +9,7 @@ const THREE_SECONDS_IN_MS = 5000;
 @Injectable({
   providedIn: 'root',
 })
-export class PlayerService {
+export class OldPlayerService {
   // Note: segundo o instrutor, BehaviorSubject é o mesmo que Subject, com a diferença que conseguimos definir o valor de início
   currentMusic = new BehaviorSubject<Music>(newMusic());
 

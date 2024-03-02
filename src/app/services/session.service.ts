@@ -65,5 +65,6 @@ export class SessionService {
   logout() {
     localStorage.clear();
     this.router.navigate(['/login']);
+    return false;
   }
 }

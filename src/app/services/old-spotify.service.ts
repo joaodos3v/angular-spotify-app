@@ -18,7 +18,7 @@ import {
   providedIn: 'root',
 })
 // Note: esse Service utiliza o padrão Singleton
-export class SpotifyService {
+export class OldSpotifyService {
   spotifyAPI: Spotify.SpotifyWebApiJs = null;
 
   user: User;

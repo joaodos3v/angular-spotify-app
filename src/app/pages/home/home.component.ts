@@ -4,7 +4,7 @@ import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { OldPlayerService } from 'src/app/services/old-player.service';
-import { SpotifyService } from 'src/app/services/spotify.service';
+import { OldSpotifyService } from 'src/app/services/old-spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
@@ -24,7 +24,7 @@ export class HomeComponent implements OnDestroy {
 
   playIcon = faPlay;
 
-  constructor(private spotifyService: SpotifyService, private oldPlayerService: OldPlayerService) {
+  constructor(private oldSpotifyService: OldSpotifyService, private oldPlayerService: OldPlayerService) {
     this.getMusics();
     this.getCurrentMusic();
   }
@@ -35,7 +35,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   async getMusics() {
-    this.musics = await this.spotifyService.getMusics();
+    this.musics = await this.oldSpotifyService.getMusics();
   }
 
   getArtists(music: Music) {
@@ -43,7 +43,7 @@ export class HomeComponent implements OnDestroy {
   }
 
   async playMusic(music: Music) {
-    await this.spotifyService.playMusic(music.id);
+    await this.oldSpotifyService.playMusic(music.id);
     this.oldPlayerService.setCurrentMusic(music);
   }
 

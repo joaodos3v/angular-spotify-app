@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Artist } from 'src/app/models/artist.model';
-import { SpotifyService } from 'src/app/services/spotify.service';
+import { OldSpotifyService } from 'src/app/services/old-spotify.service';
 import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.component';
 
 @Component({
@@ -13,11 +13,11 @@ import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.
 export class TopArtistsComponent {
   artists: Artist[] = [];
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private oldSpotifyService: OldSpotifyService) {
     this.getTopArtists();
   }
 
   async getTopArtists() {
-    this.artists = await this.spotifyService.getTopArtists(5);
+    this.artists = await this.oldSpotifyService.getTopArtists(5);
   }
 }

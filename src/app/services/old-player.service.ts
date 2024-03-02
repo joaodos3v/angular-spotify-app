@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Music } from '../models/music.model';
-import { SpotifyService } from './spotify.service';
+import { OldSpotifyService } from './old-spotify.service';
 import { newMusic } from 'src/app/common/factories';
 
 const THREE_SECONDS_IN_MS = 5000;
@@ -15,7 +15,7 @@ export class OldPlayerService {
 
   timerId: any = null;
 
-  constructor(private spotifyService: SpotifyService) {
+  constructor(private oldSpotifyService: OldSpotifyService) {
     this.getCurrentMusicFromSpotify();
   }
 
@@ -24,7 +24,7 @@ export class OldPlayerService {
     clearTimeout(this.timerId);
 
     // Get current music from Spotify
-    const currentMusic = await this.spotifyService.getCurrentMusic();
+    const currentMusic = await this.oldSpotifyService.getCurrentMusic();
     this.setCurrentMusic(currentMusic);
 
     // Create "recursive loop"
@@ -35,13 +35,5 @@ export class OldPlayerService {
 
   setCurrentMusic(music: Music) {
     this.currentMusic.next(music);
-  }
-
-  async back() {
-    await this.spotifyService.backMusic();
-  }
-
-  async next() {
-    await this.spotifyService.nextMusic();
   }
 }

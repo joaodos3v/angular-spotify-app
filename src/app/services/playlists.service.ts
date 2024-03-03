@@ -13,7 +13,7 @@ export class PlaylistsService implements PlaylistsRepository {
     return await this.playlistsRepository.getPlaylists(offset, limit);
   }
 
-  getMusicsFromPlaylist(playlistId: string, offset: number, limit: number): Promise<Playlist> {
-    throw new Error('Method not implemented.');
+  async getMusicsFromPlaylist(playlistId: string, offset: number = 0, limit: number = 50): Promise<Playlist> {
+    return await this.playlistsRepository.getMusicsFromPlaylist(playlistId, offset, limit);
   }
 }

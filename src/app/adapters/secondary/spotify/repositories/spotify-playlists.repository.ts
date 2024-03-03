@@ -23,6 +23,20 @@ export class SpotifyPlaylistsRepository implements PlaylistsRepository {
   }
 
   async getMusicsFromPlaylist(playlistId: string, offset: number, limit: number): Promise<Playlist> {
-    throw new Error('Method not implemented.');
+    const spotifyPlaylist = await this.spotifyAPI.getPlaylist(playlistId);
+
+    if (!spotifyPlaylist) {
+      return null;
+    }
+
+    // TODO: it can be simplified
+    const playlist = this.spotifyHelpers.convertExternalPlaylistToCustomPlaylist(spotifyPlaylist);
+    const spotifyMusics = await this.spotifyAPI.getPlaylistTracks(playlistId, { offset, limit });
+
+    playlist.musics = spotifyMusics.items.map((music) =>
+      this.spotifyHelpers.convertExternalMusicToCustomMusic(music.track as SpotifyApi.TrackObjectFull)
+    );
+
+    return playlist;
   }
 }

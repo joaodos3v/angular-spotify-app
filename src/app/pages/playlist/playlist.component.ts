@@ -2,11 +2,12 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PlaylistsService } from 'src/app/services/playlists.service';
 import { OldPlayerService } from 'src/app/services/old-player.service';
 import { OldSpotifyService } from 'src/app/services/old-spotify.service';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
@@ -18,6 +19,9 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   styleUrl: './playlist.component.scss',
 })
 export class PlaylistComponent implements OnDestroy {
+  // TODO: inject this via module and check if this is a good practice
+  playlistsService = inject(PlaylistsService);
+
   playIcon = faPlay;
 
   bannerText = '';
@@ -77,7 +81,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   async getPlaylistData(playlistId: string) {
-    const playlist = await this.oldSpotifyService.getPlaylistMusics(playlistId);
+    const playlist = await this.playlistsService.getMusicsFromPlaylist(playlistId);
     this.setPageData(playlist.name, playlist.imageUrl, playlist.musics);
     this.title = `Músicas de: ${playlist.name}`;
   }

@@ -1,10 +1,10 @@
 import { format } from 'date-fns/format';
 import { Helpers } from 'src/app/common/helpers';
 import { Music } from 'src/app/models/music.model';
-import { newMusic } from 'src/app/common/factories';
 import { Artist } from 'src/app/models/artist.model';
-import { addMilliseconds } from 'date-fns/addMilliseconds';
 import { Playlist } from 'src/app/models/playlist.model';
+import { addMilliseconds } from 'date-fns/addMilliseconds';
+import { newMusic, newPlaylist } from 'src/app/common/factories';
 
 export class SpotifyHelpers implements Helpers {
   convertExternalArtistToCustomArtist(spotifyArtist: SpotifyApi.ArtistObjectFull): Artist {
@@ -42,6 +42,10 @@ export class SpotifyHelpers implements Helpers {
   }
 
   convertExternalPlaylistToCustomPlaylist(spotifyPlaylist: SpotifyApi.PlaylistObjectSimplified): Playlist {
+    if (!spotifyPlaylist) {
+      return newPlaylist();
+    }
+
     return {
       id: spotifyPlaylist.id,
       name: spotifyPlaylist.name,

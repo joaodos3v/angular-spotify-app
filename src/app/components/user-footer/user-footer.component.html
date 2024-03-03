@@ -1,3 +1,4 @@
+@if (user) {
 <div class="flex">
   <img [src]="user.imageUrl" alt="Foto de perfil do usuário" srcset="" />
   <span>
@@ -5,3 +6,4 @@
   </span>
   <fa-icon class="icone" (click)="logout()" [icon]="exitIcon"> </fa-icon>
 </div>
+}

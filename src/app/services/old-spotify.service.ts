@@ -44,11 +44,6 @@ export class OldSpotifyService {
     return playlist;
   }
 
-  async getMusics(offset = 0, limit = 50): Promise<Music[]> {
-    const musics = await this.spotifyAPI.getMySavedTracks({ offset, limit });
-    return musics.items.map((music) => convertSpotifyTrackToCustomMusic(music.track));
-  }
-
   async getCurrentMusic(): Promise<Music> {
     const spotifyMusic = await this.spotifyAPI.getMyCurrentPlayingTrack();
     return convertSpotifyTrackToCustomMusic(spotifyMusic.item);

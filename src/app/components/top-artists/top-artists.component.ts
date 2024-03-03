@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Artist } from 'src/app/models/artist.model';
-import { OldSpotifyService } from 'src/app/services/old-spotify.service';
+import { ArtistsService } from 'src/app/services/artists.service';
 import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.component';
 
 @Component({
@@ -11,15 +11,18 @@ import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.
   styleUrl: './top-artists.component.scss',
 })
 export class TopArtistsComponent implements OnInit {
+  // TODO: inject this via module and check if this is a good practice
+  artistsService = inject(ArtistsService);
+
   artists: Artist[] = [];
 
-  constructor(private oldSpotifyService: OldSpotifyService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.getTopArtists();
   }
 
   async getTopArtists() {
-    this.artists = await this.oldSpotifyService.getTopArtists(5);
+    this.artists = await this.artistsService.getTopArtists(5);
   }
 }

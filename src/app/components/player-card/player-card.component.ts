@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { OldPlayerService } from 'src/app/services/old-player.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
@@ -14,7 +14,7 @@ import { SpotifyPlayerService } from 'src/app/adapters/secondary/spotify/service
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.scss',
 })
-export class PlayerCardComponent implements OnDestroy {
+export class PlayerCardComponent implements OnInit, OnDestroy {
   playerService = inject(SpotifyPlayerService);
 
   previousIcon = faStepBackward;
@@ -24,7 +24,9 @@ export class PlayerCardComponent implements OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private oldPlayerService: OldPlayerService) {
+  constructor(private oldPlayerService: OldPlayerService) {}
+
+  ngOnInit(): void {
     this.getCurrentMusic();
   }
 

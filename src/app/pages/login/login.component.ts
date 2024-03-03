@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -9,8 +9,10 @@ import { SessionService } from 'src/app/services/session.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
-  constructor(private sessionService: SessionService, private router: Router) {
+export class LoginComponent implements OnInit {
+  constructor(private sessionService: SessionService, private router: Router) {}
+
+  ngOnInit(): void {
     this.checkTokenUrlCallback();
   }
 

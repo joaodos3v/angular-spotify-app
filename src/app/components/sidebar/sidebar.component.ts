@@ -1,6 +1,6 @@
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist.model';
 import { OldSpotifyService } from 'src/app/services/old-spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
@@ -15,7 +15,7 @@ import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   homeIcon = faHome;
   searchIcon = faSearch;
   artistIcon = faGuitar;
@@ -24,7 +24,9 @@ export class SidebarComponent {
   selectedMenu = 'Home';
   playlists: Playlist[] = [];
 
-  constructor(private oldSpotifyService: OldSpotifyService, private router: Router) {
+  constructor(private oldSpotifyService: OldSpotifyService, private router: Router) {}
+
+  ngOnInit(): void {
     this.getPlaylists();
   }
 

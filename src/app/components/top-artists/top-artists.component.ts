@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Artist } from 'src/app/models/artist.model';
 import { OldSpotifyService } from 'src/app/services/old-spotify.service';
 import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.component';
@@ -10,10 +10,12 @@ import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.
   templateUrl: './top-artists.component.html',
   styleUrl: './top-artists.component.scss',
 })
-export class TopArtistsComponent {
+export class TopArtistsComponent implements OnInit {
   artists: Artist[] = [];
 
-  constructor(private oldSpotifyService: OldSpotifyService) {
+  constructor(private oldSpotifyService: OldSpotifyService) {}
+
+  ngOnInit(): void {
     this.getTopArtists();
   }
 

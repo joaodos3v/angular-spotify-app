@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { OldPlayerService } from 'src/app/services/old-player.service';
 import { OldSpotifyService } from 'src/app/services/old-spotify.service';
@@ -16,7 +16,7 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   musics: Music[] = [];
   currentMusic: Music = newMusic();
 
@@ -24,7 +24,9 @@ export class HomeComponent implements OnDestroy {
 
   playIcon = faPlay;
 
-  constructor(private oldSpotifyService: OldSpotifyService, private oldPlayerService: OldPlayerService) {
+  constructor(private oldSpotifyService: OldSpotifyService, private oldPlayerService: OldPlayerService) {}
+
+  ngOnInit(): void {
     this.getMusics();
     this.getCurrentMusic();
   }

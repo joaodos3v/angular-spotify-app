@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Music } from '../models/music.model';
 import { OldSpotifyService } from './old-spotify.service';
 import { newMusic } from 'src/app/common/factories';
@@ -9,13 +9,15 @@ const THREE_SECONDS_IN_MS = 5000;
 @Injectable({
   providedIn: 'root',
 })
-export class OldPlayerService {
+export class OldPlayerService implements OnInit {
   // Note: segundo o instrutor, BehaviorSubject é o mesmo que Subject, com a diferença que conseguimos definir o valor de início
   currentMusic = new BehaviorSubject<Music>(newMusic());
 
   timerId: any = null;
 
-  constructor(private oldSpotifyService: OldSpotifyService) {
+  constructor(private oldSpotifyService: OldSpotifyService) {}
+
+  ngOnInit(): void {
     this.getCurrentMusicFromSpotify();
   }
 

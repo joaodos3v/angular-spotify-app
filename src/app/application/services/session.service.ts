@@ -8,7 +8,12 @@ import { convertSportifyUserToCustomUser } from 'src/app/common/helpers';
 @Injectable({ providedIn: 'root' })
 export class SessionService {
   user: User;
+
+  // TODO: refatorar isso
   spotifyAPI: Spotify.SpotifyWebApiJs = null;
+
+  // TODO: init AND end session (implementando uma interface e mover ele pro spotify)
+  // Criar sesessionService como interface (na pasta providers) e implementar dentro do spotify
 
   constructor(private router: Router) {
     this.spotifyAPI = new Spotify();

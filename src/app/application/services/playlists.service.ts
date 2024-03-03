@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist.model';
-import { PlaylistsRepository } from '../repositories/playlists.repository';
-import { SpotifyPlaylistsRepository } from '../adapters/secondary/spotify/repositories/spotify-playlists.repository';
+import { PLAYLISTS_REPOSITORY_PROVIDER } from 'src/app/repositories/playlists.repository';
 
 @Injectable()
-export class PlaylistsService implements PlaylistsRepository {
-  constructor(private playlistsRepository: SpotifyPlaylistsRepository) {
-    // TODO: inject via InjectionToken in a generic way
-  }
+export class PlaylistsService {
+  playlistsRepository = inject(PLAYLISTS_REPOSITORY_PROVIDER);
+
+  constructor() {}
 
   async getPlaylists(offset: number = 0, limit: number = 50): Promise<Playlist[]> {
     return await this.playlistsRepository.getPlaylists(offset, limit);

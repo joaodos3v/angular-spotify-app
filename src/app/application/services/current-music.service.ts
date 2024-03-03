@@ -1,23 +1,21 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { Music } from '../models/music.model';
+import { Injectable, inject } from '@angular/core';
 import { MusicsService } from './musics.service';
+import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 
 const THREE_SECONDS_IN_MS = 5000;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class OldPlayerService {
+@Injectable()
+export class CurrentMusicService {
+  musicsService = inject(MusicsService);
+
   // Note: segundo o instrutor, BehaviorSubject é o mesmo que Subject, com a diferença que conseguimos definir o valor de início
   currentMusic = new BehaviorSubject<Music>(newMusic());
 
   timerId: any = null;
 
-  constructor(private musicsService: MusicsService) {
-    // TODO: inject via InjectionToken in a generic way
-
+  constructor() {
     // TODO: if I use ngOnInit, this method is not called. Why?
     this.getCurrentMusic();
   }

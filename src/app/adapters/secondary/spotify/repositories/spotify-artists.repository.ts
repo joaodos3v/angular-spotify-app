@@ -17,6 +17,6 @@ export class SpotifyArtistsRepository implements ArtistsRepository {
   async getTopArtists(limit: number): Promise<Artist[]> {
     const artists = await this.spotifyAPI.getMyTopArtists({ limit });
 
-    return artists.items.map(this.spotifyHelpers.convertSpotifyArtistToCustomArtist);
+    return artists.items.map(this.spotifyHelpers.convertExternalArtistToCustomArtist);
   }
 }

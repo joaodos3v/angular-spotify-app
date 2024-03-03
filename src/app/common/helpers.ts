@@ -5,10 +5,17 @@ import { Artist } from 'src/app/models/artist.model';
 import { Playlist } from 'src/app/models/playlist.model';
 import { newMusic, newPlaylist } from 'src/app/common/factories';
 
+/**
+ * ====== FUTURE INTERFACE ======
+ */
 export interface Helpers {
-  convertSpotifyArtistToCustomArtist(playlist: any): Artist;
+  convertExternalArtistToCustomArtist(playlist: any): Artist;
+  convertExternalMusicToCustomMusic(music: any): Music;
 }
 
+/**
+ * ====== TEMPORARY FUNCTIONS ======
+ */
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): User {
   return {
     id: user.id,
@@ -36,14 +43,6 @@ export function convertSportifyPlaylistTracksToCustomPlaylist(playlist: SpotifyA
     name: playlist.name,
     imageUrl: playlist.images.shift()?.url,
     musics: [],
-  };
-}
-
-export function convertSpotifyArtistToCustomArtist(playlist: SpotifyApi.ArtistObjectFull): Artist {
-  return {
-    id: playlist.id,
-    name: playlist.name,
-    imageUrl: playlist.images.sort((a, b) => a.width - b.width).pop()?.url,
   };
 }
 

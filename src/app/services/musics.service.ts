@@ -13,7 +13,7 @@ export class MusicsService implements MusicsRepository {
     return await this.musicsRepository.getMusics(offset, limit);
   }
 
-  getCurrentMusic(): Promise<Music> {
-    throw new Error('Method not implemented.');
+  async getCurrentMusic(): Promise<Music> {
+    return await this.musicsRepository.getCurrentMusic();
   }
 }

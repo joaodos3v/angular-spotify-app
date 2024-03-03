@@ -1,7 +1,7 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable, OnInit } from '@angular/core';
 import { Music } from '../models/music.model';
-import { OldSpotifyService } from './old-spotify.service';
+import { MusicsService } from './musics.service';
+import { Injectable, OnInit } from '@angular/core';
 import { newMusic } from 'src/app/common/factories';
 
 const THREE_SECONDS_IN_MS = 5000;
@@ -15,23 +15,25 @@ export class OldPlayerService implements OnInit {
 
   timerId: any = null;
 
-  constructor(private oldSpotifyService: OldSpotifyService) {}
+  constructor(private musicsService: MusicsService) {
+    // TODO: inject via InjectionToken in a generic way
+  }
 
   ngOnInit(): void {
-    this.getCurrentMusicFromSpotify();
+    this.getCurrentMusic();
   }
 
   // Note: criamos esse interval para que fosse possível "reagir" às mudanças feitas no próprio Spotify (como estamos usando a API Rest, não temos como "observar" as mudanças vindas de lá)
-  async getCurrentMusicFromSpotify() {
+  async getCurrentMusic() {
     clearTimeout(this.timerId);
 
     // Get current music from Spotify
-    const currentMusic = await this.oldSpotifyService.getCurrentMusic();
+    const currentMusic = await this.musicsService.getCurrentMusic();
     this.setCurrentMusic(currentMusic);
 
     // Create "recursive loop"
     this.timerId = setInterval(async () => {
-      await this.getCurrentMusicFromSpotify();
+      await this.getCurrentMusic();
     }, THREE_SECONDS_IN_MS);
   }
 

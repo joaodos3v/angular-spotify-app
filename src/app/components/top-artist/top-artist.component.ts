@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Artist } from 'src/app/models/artist.model';
 import { newArtist } from 'src/app/common/factories';
-import { ArtistsService } from 'src/app/services/artists.service';
+import { ArtistsService } from 'src/app/application/services/artists.service';
 
 @Component({
   selector: 'app-top-artist',

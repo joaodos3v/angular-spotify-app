@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist.model';
 import { SpotifyHelpers } from '../helpers/spotify.helpers';
 import { PlaylistsRepository } from 'src/app/repositories/playlists.repository';
-import { SessionService } from 'src/app/services/session.service';
+import { SessionService } from 'src/app/application/services/session.service';
 
 @Injectable()
 export class SpotifyPlaylistsRepository implements PlaylistsRepository {

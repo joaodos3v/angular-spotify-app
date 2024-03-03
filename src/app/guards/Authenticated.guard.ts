@@ -1,4 +1,4 @@
-import { SessionService } from 'src/app/services/session.service';
+import { SessionService } from 'src/app/application/services/session.service';
 import { inject } from '@angular/core';
 import { type CanMatchFn } from '@angular/router';
 

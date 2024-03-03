@@ -1,6 +1,5 @@
 import Spotify from 'spotify-web-api-js';
 import { Injectable } from '@angular/core';
-import { Music } from 'src/app/models/music.model';
 import { SessionService } from './session.service';
 import { Playlist } from 'src/app/models/playlist.model';
 import {
@@ -42,11 +41,6 @@ export class OldSpotifyService {
     );
 
     return playlist;
-  }
-
-  async getCurrentMusic(): Promise<Music> {
-    const spotifyMusic = await this.spotifyAPI.getMyCurrentPlayingTrack();
-    return convertSpotifyTrackToCustomMusic(spotifyMusic.item);
   }
 
   async playMusic(musicId: string) {

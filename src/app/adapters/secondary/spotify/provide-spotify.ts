@@ -9,36 +9,47 @@ import { ARTISTS_REPOSITORY_PROVIDER } from 'src/app/repositories/artists.reposi
 import { SpotifyPlaylistsRepository } from './repositories/spotify-playlists.repository';
 import { PLAYLISTS_REPOSITORY_PROVIDER } from 'src/app/repositories/playlists.repository';
 
-// TODO: criar funções separadas para cada um dos providers
+export const provideSpotifyPlayerService = () => [
+  {
+    provide: PLAYER_PROVIDER,
+    useClass: SpotifyPlayerService,
+  },
+];
+
+export const provideSpotifyAPI = () => [
+  {
+    provide: SPOTIFY_API_PROVIDER,
+    useValue: new Spotify(),
+  },
+];
+
+export const provideSpotifyArtistsRepository = () => [
+  {
+    provide: ARTISTS_REPOSITORY_PROVIDER,
+    useClass: SpotifyArtistsRepository,
+  },
+];
+
+export const provideSpotifyMusicsRepository = () => [
+  {
+    provide: MUSICS_REPOSITORY_PROVIDER,
+    useClass: SpotifyMusicsRepository,
+  },
+];
+
+export const provideSpotifyPlaylistsRepository = () => [
+  {
+    provide: PLAYLISTS_REPOSITORY_PROVIDER,
+    useClass: SpotifyPlaylistsRepository,
+  },
+];
 
 export const provideSpotify = () => {
   return [
-    {
-      provide: PLAYER_PROVIDER,
-      useClass: SpotifyPlayerService,
-    },
-    {
-      provide: SPOTIFY_API_PROVIDER,
-      useValue: new Spotify(),
-    },
-    {
-      provide: ARTISTS_REPOSITORY_PROVIDER,
-      useClass: SpotifyArtistsRepository,
-    },
-    {
-      provide: MUSICS_REPOSITORY_PROVIDER,
-      useClass: SpotifyMusicsRepository,
-    },
-    {
-      provide: PLAYLISTS_REPOSITORY_PROVIDER,
-      useClass: SpotifyPlaylistsRepository,
-    },
-    // {
-    //   provide: EXAMPLE_PROVIDER,
-    //   useFactory: () => {
-
-    //   },
-    //   useExisting: SPOTIFY_API_PROVIDER,
-    // },
+    ...provideSpotifyPlayerService(),
+    ...provideSpotifyAPI(),
+    ...provideSpotifyArtistsRepository(),
+    ...provideSpotifyMusicsRepository(),
+    ...provideSpotifyPlaylistsRepository(),
   ];
 };

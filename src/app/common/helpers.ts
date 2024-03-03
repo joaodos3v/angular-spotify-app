@@ -5,6 +5,10 @@ import { Artist } from 'src/app/models/artist.model';
 import { Playlist } from 'src/app/models/playlist.model';
 import { newMusic, newPlaylist } from 'src/app/common/factories';
 
+export interface Helpers {
+  convertSpotifyArtistToCustomArtist(playlist: any): Artist;
+}
+
 export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersProfileResponse): User {
   return {
     id: user.id,

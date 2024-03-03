@@ -2,14 +2,12 @@ import Spotify from 'spotify-web-api-js';
 import { Injectable } from '@angular/core';
 import { Music } from 'src/app/models/music.model';
 import { SessionService } from './session.service';
-import { Artist } from 'src/app/models/artist.model';
 import { Playlist } from 'src/app/models/playlist.model';
 import {
   convertSportifyPlaylistToCustomPlaylist,
   convertSportifyPlaylistTracksToCustomPlaylist,
-  convertSpotifyArtistToCustomArtist,
   convertSpotifyTrackToCustomMusic,
-} from 'src/app/common/spotifyHelper';
+} from 'src/app/common/helpers';
 
 @Injectable({
   providedIn: 'root',
@@ -44,11 +42,6 @@ export class OldSpotifyService {
     );
 
     return playlist;
-  }
-
-  async getTopArtists(limit = 10): Promise<Artist[]> {
-    const artists = await this.spotifyAPI.getMyTopArtists({ limit });
-    return artists.items.map(convertSpotifyArtistToCustomArtist);
   }
 
   async getMusics(offset = 0, limit = 50): Promise<Music[]> {

@@ -31,7 +31,7 @@ export class PlaylistComponent implements OnDestroy {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private spotifyService: OldSpotifyService,
+    private oldSpotifyService: OldSpotifyService,
     private oldPlayerService: OldPlayerService
   ) {
     this.getMusics();
@@ -77,7 +77,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   async getPlaylistData(playlistId: string) {
-    const playlist = await this.spotifyService.getPlaylistMusics(playlistId);
+    const playlist = await this.oldSpotifyService.getPlaylistMusics(playlistId);
     this.setPageData(playlist.name, playlist.imageUrl, playlist.musics);
     this.title = `Músicas de: ${playlist.name}`;
   }
@@ -87,7 +87,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   async playMusic(music: Music) {
-    await this.spotifyService.playMusic(music.id);
+    await this.oldSpotifyService.playMusic(music.id);
     this.oldPlayerService.setCurrentMusic(music);
   }
 

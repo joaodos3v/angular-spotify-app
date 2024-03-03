@@ -4,13 +4,14 @@ import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { Artist } from 'src/app/models/artist.model';
 import { addMilliseconds } from 'date-fns/addMilliseconds';
+import { Playlist } from 'src/app/models/playlist.model';
 
 export class SpotifyHelpers implements Helpers {
-  convertExternalArtistToCustomArtist(playlist: SpotifyApi.ArtistObjectFull): Artist {
+  convertExternalArtistToCustomArtist(spotifyArtist: SpotifyApi.ArtistObjectFull): Artist {
     return {
-      id: playlist.id,
-      name: playlist.name,
-      imageUrl: playlist.images.sort((a, b) => a.width - b.width).pop()?.url,
+      id: spotifyArtist.id,
+      name: spotifyArtist.name,
+      imageUrl: spotifyArtist.images.sort((a, b) => a.width - b.width).pop()?.url,
     };
   }
 
@@ -37,6 +38,15 @@ export class SpotifyHelpers implements Helpers {
         name: artist.name,
       })),
       time: msToMinutes(spotifyTrack.duration_ms),
+    };
+  }
+
+  convertExternalPlaylistToCustomPlaylist(spotifyPlaylist: SpotifyApi.PlaylistObjectSimplified): Playlist {
+    return {
+      id: spotifyPlaylist.id,
+      name: spotifyPlaylist.name,
+      imageUrl: spotifyPlaylist.images.pop()?.url,
+      musics: [],
     };
   }
 }

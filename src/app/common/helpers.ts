@@ -9,8 +9,9 @@ import { newMusic, newPlaylist } from 'src/app/common/factories';
  * ====== FUTURE INTERFACE ======
  */
 export interface Helpers {
-  convertExternalArtistToCustomArtist(playlist: any): Artist;
+  convertExternalArtistToCustomArtist(artist: any): Artist;
   convertExternalMusicToCustomMusic(music: any): Music;
+  convertExternalPlaylistToCustomPlaylist(playlist: any): Playlist;
 }
 
 /**
@@ -21,15 +22,6 @@ export function convertSportifyUserToCustomUser(user: SpotifyApi.CurrentUsersPro
     id: user.id,
     name: user.display_name,
     imageUrl: user.images.pop()?.url,
-  };
-}
-
-export function convertSportifyPlaylistToCustomPlaylist(playlist: SpotifyApi.PlaylistObjectSimplified): Playlist {
-  return {
-    id: playlist.id,
-    name: playlist.name,
-    imageUrl: playlist.images.pop()?.url,
-    musics: [],
   };
 }
 

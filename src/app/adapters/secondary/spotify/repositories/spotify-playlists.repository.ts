@@ -1,14 +1,15 @@
 import Spotify from 'spotify-web-api-js';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Playlist } from 'src/app/models/playlist.model';
 import { SpotifyHelpers } from '../helpers/spotify.helpers';
-import { PlaylistsRepository } from 'src/app/repositories/playlists.repository';
+import { SPOTIFY_API_PROVIDER } from '../providers/spotify-api.provider';
 import { SessionService } from 'src/app/application/services/session.service';
+import { PlaylistsRepository } from 'src/app/repositories/playlists.repository';
 
 @Injectable()
 export class SpotifyPlaylistsRepository implements PlaylistsRepository {
-  // TODO: transform to InjectionToken
-  spotifyAPI: Spotify.SpotifyWebApiJs = null;
+  spotifyAPI = inject(SPOTIFY_API_PROVIDER);
+
   spotifyHelpers = new SpotifyHelpers();
 
   constructor(private sessionService: SessionService) {

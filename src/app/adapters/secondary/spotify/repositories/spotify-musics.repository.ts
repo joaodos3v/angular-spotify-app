@@ -1,18 +1,17 @@
 import Spotify from 'spotify-web-api-js';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Music } from 'src/app/models/music.model';
 import { SpotifyHelpers } from '../helpers/spotify.helpers';
 import { MusicsRepository } from 'src/app/repositories/musics.repository';
+import { SPOTIFY_API_PROVIDER } from '../providers/spotify-api.provider';
 
 @Injectable()
 export class SpotifyMusicsRepository implements MusicsRepository {
-  // TODO: transform to InjectionToken
-  spotifyAPI: Spotify.SpotifyWebApiJs = null;
+  spotifyAPI = inject(SPOTIFY_API_PROVIDER);
+
   spotifyHelpers = new SpotifyHelpers();
 
-  constructor() {
-    this.spotifyAPI = new Spotify();
-  }
+  constructor() {}
 
   async getMusics(offset: number, limit: number): Promise<Music[]> {
     const spotifyMusics = await this.spotifyAPI.getMySavedTracks({ offset, limit });

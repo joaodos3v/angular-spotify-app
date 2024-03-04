@@ -3,17 +3,21 @@ import { provideRouter } from '@angular/router';
 
 import { AppRoutes } from './app.routes';
 
-import { MusicsService } from './services/musics.service';
-import { SpotifyMusicsRepository } from './adapters/secondary/spotify/repositories/spotify-musics.repository';
-import { PlaylistsService } from './services/playlists.service';
-import { SpotifyPlaylistsRepository } from './adapters/secondary/spotify/repositories/spotify-playlists.repository';
+// TODO: deixar aqui só se for usado na aplicação toda (ou em vários componentes)
+import { MusicsService } from 'src/app/application/services/musics.service';
+import { ArtistsService } from 'src/app/application/services/artists.service';
+import { PlaylistsService } from 'src/app/application/services/playlists.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
+
+import { provideSpotify } from './adapters/secondary/spotify/provide-spotify';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(AppRoutes),
     MusicsService,
-    SpotifyMusicsRepository,
+    ArtistsService,
     PlaylistsService,
-    SpotifyPlaylistsRepository,
+    CurrentMusicService,
+    ...provideSpotify(),
   ],
 };

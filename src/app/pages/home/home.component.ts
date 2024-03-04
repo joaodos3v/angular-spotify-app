@@ -2,11 +2,11 @@ import { Subscription } from 'rxjs';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { MusicsService } from 'src/app/services/musics.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { OldPlayerService } from 'src/app/services/old-player.service';
-import { OldSpotifyService } from 'src/app/services/old-spotify.service';
+import { MusicsService } from 'src/app/application/services/musics.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
@@ -18,8 +18,9 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  // TODO: inject this via module and check if this is a good practice
   musicsService = inject(MusicsService);
+  playerService = inject(PLAYER_PROVIDER);
+  currentMusicService = inject(CurrentMusicService);
 
   musics: Music[] = [];
   currentMusic: Music = newMusic();
@@ -28,7 +29,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   playIcon = faPlay;
 
-  constructor(private oldSpotifyService: OldSpotifyService, private oldPlayerService: OldPlayerService) {}
+  constructor() {}
 
   ngOnInit(): void {
     this.getMusics();
@@ -49,12 +50,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   async playMusic(music: Music) {
-    await this.oldSpotifyService.playMusic(music.id);
-    this.oldPlayerService.setCurrentMusic(music);
+    await this.playerService.play(music.id);
+    this.currentMusicService.setCurrentMusic(music);
   }
 
   getCurrentMusic() {
-    const sub = this.oldPlayerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 

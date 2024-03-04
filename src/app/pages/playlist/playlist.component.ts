@@ -5,11 +5,11 @@ import { newMusic } from 'src/app/common/factories';
 import { Component, OnDestroy, inject } from '@angular/core';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { PlaylistsService } from 'src/app/services/playlists.service';
-import { OldPlayerService } from 'src/app/services/old-player.service';
-import { OldSpotifyService } from 'src/app/services/old-spotify.service';
+import { PlaylistsService } from 'src/app/application/services/playlists.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
 
 @Component({
   selector: 'app-playlist',
@@ -19,7 +19,7 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   styleUrl: './playlist.component.scss',
 })
 export class PlaylistComponent implements OnDestroy {
-  // TODO: inject this via module and check if this is a good practice
+  playerService = inject(PLAYER_PROVIDER);
   playlistsService = inject(PlaylistsService);
 
   playIcon = faPlay;
@@ -33,11 +33,7 @@ export class PlaylistComponent implements OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private oldSpotifyService: OldSpotifyService,
-    private oldPlayerService: OldPlayerService
-  ) {
+  constructor(private activatedRoute: ActivatedRoute, private currentMusicService: CurrentMusicService) {
     this.getMusics();
     this.getCurrentMusic();
   }
@@ -47,7 +43,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   getCurrentMusic() {
-    const sub = this.oldPlayerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 
@@ -91,8 +87,8 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   async playMusic(music: Music) {
-    await this.oldSpotifyService.playMusic(music.id);
-    this.oldPlayerService.setCurrentMusic(music);
+    await this.playerService.play(music.id);
+    this.currentMusicService.setCurrentMusic(music);
   }
 
   getArtists(music: Music) {

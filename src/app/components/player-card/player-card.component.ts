@@ -1,11 +1,11 @@
 import { Subscription } from 'rxjs';
 import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { OldPlayerService } from 'src/app/services/old-player.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
-import { SpotifyPlayerService } from 'src/app/adapters/secondary/spotify/services/spotify-player.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 
 @Component({
   selector: 'app-player-card',
@@ -15,7 +15,7 @@ import { SpotifyPlayerService } from 'src/app/adapters/secondary/spotify/service
   styleUrl: './player-card.component.scss',
 })
 export class PlayerCardComponent implements OnInit, OnDestroy {
-  playerService = inject(SpotifyPlayerService);
+  playerService = inject(PLAYER_PROVIDER);
 
   previousIcon = faStepBackward;
   nextIcon = faStepForward;
@@ -24,7 +24,7 @@ export class PlayerCardComponent implements OnInit, OnDestroy {
 
   subs: Subscription[] = [];
 
-  constructor(private oldPlayerService: OldPlayerService) {}
+  constructor(private currentMusicService: CurrentMusicService) {}
 
   ngOnInit(): void {
     this.getCurrentMusic();
@@ -35,7 +35,7 @@ export class PlayerCardComponent implements OnInit, OnDestroy {
   }
 
   getCurrentMusic() {
-    const sub = this.oldPlayerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 

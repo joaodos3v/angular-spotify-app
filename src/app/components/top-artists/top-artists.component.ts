@@ -11,7 +11,6 @@ import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.
   styleUrl: './top-artists.component.scss',
 })
 export class TopArtistsComponent implements OnInit {
-  // TODO: inject this via module and check if this is a good practice
   artistsService = inject(ArtistsService);
 
   artists: Artist[] = [];

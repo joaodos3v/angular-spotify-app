@@ -1,13 +1,14 @@
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { IMusic } from 'src/app/interfaces/IMusic';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy } from '@angular/core';
+import { Music } from 'src/app/domain/models/music.model';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { PlayerService } from 'src/app/services/player.service';
-import { SpotifyService } from 'src/app/services/spotify.service';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
 import { BannerComponent } from 'src/app/components/banner/banner.component';
+import { PlaylistsService } from 'src/app/application/services/playlists.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
 @Component({
@@ -18,22 +19,21 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   styleUrl: './playlist.component.scss',
 })
 export class PlaylistComponent implements OnDestroy {
+  playerService = inject(PLAYER_PROVIDER);
+  playlistsService = inject(PlaylistsService);
+
   playIcon = faPlay;
 
   bannerText = '';
   bannerImageUrl = '';
   title = '';
 
-  musics: IMusic[] = [];
-  currentMusic: IMusic = newMusic();
+  musics: Music[] = [];
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private spotifyService: SpotifyService,
-    private playerService: PlayerService
-  ) {
+  constructor(private activatedRoute: ActivatedRoute, private currentMusicService: CurrentMusicService) {
     this.getMusics();
     this.getCurrentMusic();
   }
@@ -43,7 +43,7 @@ export class PlaylistComponent implements OnDestroy {
   }
 
   getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 
@@ -70,14 +70,14 @@ export class PlaylistComponent implements OnDestroy {
     }
   }
 
-  setPageData(bannerText: string, bannerImageUrl: string, musics: IMusic[]) {
+  setPageData(bannerText: string, bannerImageUrl: string, musics: Music[]) {
     this.musics = musics;
     this.bannerImageUrl = bannerImageUrl;
     this.bannerText = bannerText;
   }
 
   async getPlaylistData(playlistId: string) {
-    const playlist = await this.spotifyService.getPlaylistMusics(playlistId);
+    const playlist = await this.playlistsService.getMusicsFromPlaylist(playlistId);
     this.setPageData(playlist.name, playlist.imageUrl, playlist.musics);
     this.title = `Músicas de: ${playlist.name}`;
   }
@@ -86,12 +86,12 @@ export class PlaylistComponent implements OnDestroy {
     // TODO
   }
 
-  async playMusic(music: IMusic) {
-    await this.spotifyService.playMusic(music.id);
-    this.playerService.setCurrentMusic(music);
+  async playMusic(music: Music) {
+    await this.playerService.play(music.id);
+    this.currentMusicService.setCurrentMusic(music);
   }
 
-  getArtists(music: IMusic) {
+  getArtists(music: Music) {
     return music.artists.map((artist) => artist.name).join(', ');
   }
 }

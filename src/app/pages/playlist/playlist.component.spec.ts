@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PlaylistComponent } from './playlist.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SpotifyPlayerService } from 'src/app/adapters/secondary/spotify/services/spotify-player.service';
 
 describe('PlaylistComponent', () => {
   let component: PlaylistComponent;
@@ -8,10 +10,10 @@ describe('PlaylistComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlaylistComponent]
-    })
-    .compileComponents();
-    
+      imports: [PlaylistComponent, RouterTestingModule],
+      providers: [SpotifyPlayerService],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(PlaylistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

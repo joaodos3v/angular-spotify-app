@@ -1,25 +1,28 @@
-import { Component } from '@angular/core';
-import { IUser } from 'src/app/interfaces/IUser';
+import { NgIf } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/domain/models/user.model';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { SpotifyService } from 'src/app/services/spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { SessionService } from 'src/app/application/services/session.service';
 
 @Component({
   selector: 'app-user-footer',
   standalone: true,
-  imports: [FaIconComponent],
+  imports: [FaIconComponent, NgIf],
   templateUrl: './user-footer.component.html',
   styleUrl: './user-footer.component.scss',
 })
-export class UserFooterComponent {
-  user: IUser = null;
+export class UserFooterComponent implements OnInit {
+  user: User = null;
   exitIcon = faSignOutAlt;
 
-  constructor(private spotifyService: SpotifyService) {
-    this.user = this.spotifyService.user;
+  constructor(private sessionService: SessionService) {}
+
+  ngOnInit(): void {
+    this.user = this.sessionService.user;
   }
 
   logout() {
-    this.spotifyService.logout();
+    this.sessionService.logout();
   }
 }

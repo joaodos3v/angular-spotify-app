@@ -1,10 +1,11 @@
 import { Subscription } from 'rxjs';
 import { newMusic } from 'src/app/common/factories';
-import { IMusic } from 'src/app/interfaces/IMusic';
-import { Component, OnDestroy } from '@angular/core';
-import { PlayerService } from 'src/app/services/player.service';
+import { Music } from 'src/app/domain/models/music.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 
 @Component({
   selector: 'app-player-card',
@@ -13,23 +14,28 @@ import { faStepBackward, faStepForward } from '@fortawesome/free-solid-svg-icons
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.scss',
 })
-export class PlayerCardComponent implements OnDestroy {
+export class PlayerCardComponent implements OnInit, OnDestroy {
+  playerService = inject(PLAYER_PROVIDER);
+
   previousIcon = faStepBackward;
   nextIcon = faStepForward;
 
-  currentMusic: IMusic = newMusic();
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 
-  constructor(private playerService: PlayerService) {
+  constructor(private currentMusicService: CurrentMusicService) {}
+
+  ngOnInit(): void {
     this.getCurrentMusic();
   }
+
   ngOnDestroy(): void {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
 
   getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 
@@ -40,7 +46,7 @@ export class PlayerCardComponent implements OnDestroy {
     this.playerService.back();
   }
 
-  nextMusic() {
-    this.playerService.next();
+  async nextMusic() {
+    await this.playerService.next();
   }
 }

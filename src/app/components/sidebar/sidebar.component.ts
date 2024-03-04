@@ -1,9 +1,9 @@
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
-import { IPlaylist } from 'src/app/interfaces/IPlaylist';
-import { SpotifyService } from 'src/app/services/spotify.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { Playlist } from 'src/app/domain/models/playlist.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PlaylistsService } from 'src/app/application/services/playlists.service';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { MenuButtonComponent } from 'src/app/components/menu-button/menu-button.component';
 import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.component';
@@ -15,16 +15,21 @@ import { UserFooterComponent } from 'src/app/components/user-footer/user-footer.
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
+  // TODO: inject this via module and check if this is a good practice
+  playlistsService = inject(PlaylistsService);
+
   homeIcon = faHome;
   searchIcon = faSearch;
   artistIcon = faGuitar;
   playlistIcon = faMusic;
 
   selectedMenu = 'Home';
-  playlists: IPlaylist[] = [];
+  playlists: Playlist[] = [];
 
-  constructor(private spotifyService: SpotifyService, private router: Router) {
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
     this.getPlaylists();
   }
 
@@ -39,6 +44,6 @@ export class SidebarComponent {
   }
 
   async getPlaylists() {
-    this.playlists = await this.spotifyService.getUserPlaylists();
+    this.playlists = await this.playlistsService.getPlaylists();
   }
 }

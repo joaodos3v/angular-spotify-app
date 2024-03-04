@@ -1,11 +1,12 @@
 import { Subscription } from 'rxjs';
-import { IMusic } from 'src/app/interfaces/IMusic';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy } from '@angular/core';
+import { Music } from 'src/app/domain/models/music.model';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { PlayerService } from 'src/app/services/player.service';
-import { SpotifyService } from 'src/app/services/spotify.service';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { MusicsService } from 'src/app/application/services/musics.service';
+import { CurrentMusicService } from 'src/app/application/services/current-music.service';
 import { TopArtistComponent } from 'src/app/components/top-artist/top-artist.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
 
@@ -16,15 +17,21 @@ import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnDestroy {
-  musics: IMusic[] = [];
-  currentMusic: IMusic = newMusic();
+export class HomeComponent implements OnInit, OnDestroy {
+  musicsService = inject(MusicsService);
+  playerService = inject(PLAYER_PROVIDER);
+  currentMusicService = inject(CurrentMusicService);
+
+  musics: Music[] = [];
+  currentMusic: Music = newMusic();
 
   subs: Subscription[] = [];
 
   playIcon = faPlay;
 
-  constructor(private spotifyService: SpotifyService, private playerService: PlayerService) {
+  constructor() {}
+
+  ngOnInit(): void {
     this.getMusics();
     this.getCurrentMusic();
   }
@@ -35,20 +42,20 @@ export class HomeComponent implements OnDestroy {
   }
 
   async getMusics() {
-    this.musics = await this.spotifyService.getMusics();
+    this.musics = await this.musicsService.getMusics();
   }
 
-  getArtists(music: IMusic) {
+  getArtists(music: Music) {
     return music.artists.map((artist) => artist.name).join(', ');
   }
 
-  async playMusic(music: IMusic) {
-    await this.spotifyService.playMusic(music.id);
-    this.playerService.setCurrentMusic(music);
+  async playMusic(music: Music) {
+    await this.playerService.play(music.id);
+    this.currentMusicService.setCurrentMusic(music);
   }
 
   getCurrentMusic() {
-    const sub = this.playerService.currentMusic.subscribe((music) => {
+    const sub = this.currentMusicService.currentMusic.subscribe((music) => {
       this.currentMusic = music;
     });
 

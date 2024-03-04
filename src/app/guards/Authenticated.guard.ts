@@ -1,30 +1,22 @@
+import { SessionService } from 'src/app/application/services/session.service';
 import { inject } from '@angular/core';
-import { Router, type CanMatchFn } from '@angular/router';
-import { SpotifyService } from 'src/app/services/spotify.service';
-
-const notAuthenticated = (router: Router) => {
-  localStorage.clear();
-  router.navigate(['/login']);
-  return false;
-};
+import { type CanMatchFn } from '@angular/router';
 
 // Note: impede o carregamento do Módulo até acabar todo o processamento (ex: promise com setTimeout)
 export const AuthenticatedGuard: CanMatchFn = (route, state) => {
-  const router = inject(Router);
+  const sessionService = inject(SessionService);
 
   const token = localStorage.getItem('token');
   if (!token) {
-    return notAuthenticated(router);
+    return sessionService.logout();
   }
 
-  const spotifyService = inject(SpotifyService);
-
   return new Promise(async (res) => {
-    const hasCreatedUser = await spotifyService.startUser();
+    const hasCreatedUser = await sessionService.startUser();
     if (hasCreatedUser) {
       res(true);
     } else {
-      res(notAuthenticated(router));
+      res(sessionService.logout());
     }
   });
 };

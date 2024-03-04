@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import { newArtist } from 'src/app/common/factories';
-import { IArtist } from 'src/app/interfaces/IArtist';
-import { SpotifyService } from 'src/app/services/spotify.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { Artist } from 'src/app/domain/models/artist.model';
+import { ArtistsService } from 'src/app/application/services/artists.service';
 
 @Component({
   selector: 'app-top-artist',
@@ -10,16 +10,20 @@ import { SpotifyService } from 'src/app/services/spotify.service';
   templateUrl: './top-artist.component.html',
   styleUrl: './top-artist.component.scss',
 })
-export class TopArtistComponent {
-  // Note: instrutor sugeriu fazer isso para não inicializar "artist" com null
-  topArtist: IArtist = newArtist();
+export class TopArtistComponent implements OnInit {
+  // TODO: inject this via module and check if this is a good practice
+  artistsService = inject(ArtistsService);
 
-  constructor(private spotifyService: SpotifyService) {
+  topArtist: Artist = newArtist();
+
+  constructor() {}
+
+  ngOnInit(): void {
     this.getArtist();
   }
 
   async getArtist() {
-    const artists = await this.spotifyService.getTopArtists(1);
+    const artists = await this.artistsService.getTopArtists(1);
 
     if (!!artists.length) {
       this.topArtist = artists.pop();

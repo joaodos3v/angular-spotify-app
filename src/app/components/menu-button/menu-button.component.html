@@ -1,4 +1,4 @@
-<button type="button" [class.selected]="selected" (click)="onClick()">
+<button type="button" [class.selected]="selected" (click)="onClick()" data-testid="menu-button">
   <ng-content></ng-content>
-  <span>{{ description }} </span>
+  <span>{{ description }}</span>
 </button>

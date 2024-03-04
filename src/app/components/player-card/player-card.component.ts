@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
-import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
+import { Music } from 'src/app/domain/models/music.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';

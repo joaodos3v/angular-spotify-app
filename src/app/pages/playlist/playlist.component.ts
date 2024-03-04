@@ -1,15 +1,15 @@
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Music } from 'src/app/domain/models/music.model';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnDestroy, inject } from '@angular/core';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
+import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { PlaylistsService } from 'src/app/application/services/playlists.service';
 import { CurrentMusicService } from 'src/app/application/services/current-music.service';
-import { BannerComponent } from 'src/app/components/banner/banner.component';
 import { RightPanelComponent } from 'src/app/components/right-panel/right-panel.component';
-import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';
 
 @Component({
   selector: 'app-playlist',

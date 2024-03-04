@@ -1,7 +1,7 @@
 import { NgFor } from '@angular/common';
 import { Router } from '@angular/router';
 import { Component, OnInit, inject } from '@angular/core';
-import { Playlist } from 'src/app/models/playlist.model';
+import { Playlist } from 'src/app/domain/models/playlist.model';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { PlaylistsService } from 'src/app/application/services/playlists.service';
 import { faGuitar, faHome, faMusic, faSearch } from '@fortawesome/free-solid-svg-icons';

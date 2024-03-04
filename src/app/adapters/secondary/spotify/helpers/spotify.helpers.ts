@@ -1,9 +1,9 @@
 import { format } from 'date-fns/format';
 import { Helpers } from 'src/app/common/helpers';
-import { Music } from 'src/app/models/music.model';
-import { Artist } from 'src/app/models/artist.model';
-import { Playlist } from 'src/app/models/playlist.model';
+import { Music } from 'src/app/domain/models/music.model';
 import { addMilliseconds } from 'date-fns/addMilliseconds';
+import { Artist } from 'src/app/domain/models/artist.model';
+import { Playlist } from 'src/app/domain/models/playlist.model';
 import { newMusic, newPlaylist } from 'src/app/common/factories';
 
 export class SpotifyHelpers implements Helpers {

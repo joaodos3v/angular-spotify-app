@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Music } from 'src/app/models/music.model';
+import { Music } from 'src/app/domain/models/music.model';
 import { MUSICS_REPOSITORY_PROVIDER, MusicsRepository } from 'src/app/repositories/musics.repository';
 
 @Injectable()

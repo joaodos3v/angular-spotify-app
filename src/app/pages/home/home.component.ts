@@ -1,6 +1,6 @@
 import { Subscription } from 'rxjs';
-import { Music } from 'src/app/models/music.model';
 import { newMusic } from 'src/app/common/factories';
+import { Music } from 'src/app/domain/models/music.model';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { PLAYER_PROVIDER } from 'src/app/providers/player.provider';

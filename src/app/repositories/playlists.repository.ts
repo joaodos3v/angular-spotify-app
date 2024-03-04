@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { Playlist } from 'src/app/models/playlist.model';
+import { Playlist } from 'src/app/domain/models/playlist.model';
 
 export interface PlaylistsRepository {
   getPlaylists(offfset: number, limit: number): Promise<Playlist[]>;

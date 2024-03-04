@@ -1,7 +1,7 @@
 import Spotify from 'spotify-web-api-js';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/domain/models/user.model';
 import { SpotifyConfiguration } from 'src/environments/environment';
 import { convertSportifyUserToCustomUser } from 'src/app/common/helpers';
 

@@ -1,6 +1,5 @@
-import Spotify from 'spotify-web-api-js';
 import { Injectable, inject } from '@angular/core';
-import { Music } from 'src/app/models/music.model';
+import { Music } from 'src/app/domain/models/music.model';
 import { SpotifyHelpers } from '../helpers/spotify.helpers';
 import { MusicsRepository } from 'src/app/repositories/musics.repository';
 import { SPOTIFY_API_PROVIDER } from '../providers/spotify-api.provider';

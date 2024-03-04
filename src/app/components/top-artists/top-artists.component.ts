@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Artist } from 'src/app/models/artist.model';
+import { Artist } from 'src/app/domain/models/artist.model';
 import { ArtistsService } from 'src/app/application/services/artists.service';
 import { ArtistItemComponent } from 'src/app/components/artist-item/artist-item.component';
 

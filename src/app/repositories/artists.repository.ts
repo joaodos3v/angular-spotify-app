@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { Artist } from 'src/app/models/artist.model';
+import { Artist } from 'src/app/domain/models/artist.model';
 
 export interface ArtistsRepository {
   getTopArtists(limit: number): Promise<Artist[]>;

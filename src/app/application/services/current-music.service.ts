@@ -1,8 +1,8 @@
 import { BehaviorSubject } from 'rxjs';
-import { Injectable, inject } from '@angular/core';
 import { MusicsService } from './musics.service';
-import { Music } from 'src/app/models/music.model';
+import { Injectable, inject } from '@angular/core';
 import { newMusic } from 'src/app/common/factories';
+import { Music } from 'src/app/domain/models/music.model';
 
 const THREE_SECONDS_IN_MS = 5000;
 

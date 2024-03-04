@@ -1,9 +1,9 @@
+import { NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/models/user.model';
+import { User } from 'src/app/domain/models/user.model';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { SessionService } from 'src/app/application/services/session.service';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-footer',

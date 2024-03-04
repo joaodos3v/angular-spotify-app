@@ -1,7 +1,7 @@
-import { User } from 'src/app/models/user.model';
-import { Music } from 'src/app/models/music.model';
-import { Artist } from 'src/app/models/artist.model';
-import { Playlist } from 'src/app/models/playlist.model';
+import { User } from 'src/app/domain/models/user.model';
+import { Music } from 'src/app/domain/models/music.model';
+import { Artist } from 'src/app/domain/models/artist.model';
+import { Playlist } from 'src/app/domain/models/playlist.model';
 
 /**
  * ====== FUTURE INTERFACE ======

@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Artist } from 'src/app/models/artist.model';
 import { newArtist } from 'src/app/common/factories';
+import { Component, OnInit, inject } from '@angular/core';
+import { Artist } from 'src/app/domain/models/artist.model';
 import { ArtistsService } from 'src/app/application/services/artists.service';
 
 @Component({

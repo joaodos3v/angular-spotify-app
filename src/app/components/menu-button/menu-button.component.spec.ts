@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { By } from '@angular/platform-browser';
 import { MenuButtonComponent } from './menu-button.component';
 
@@ -41,7 +40,7 @@ describe('MenuButtonComponent', () => {
 
   it('should emit on click event', () => {
     const component = fixture.componentInstance;
-    spyOn(component.click, 'emit');
+    jest.spyOn(component.click, 'emit');
 
     const element = fixture.debugElement.query(By.css('[data-testid="menu-button"]'));
     element.nativeElement.click();

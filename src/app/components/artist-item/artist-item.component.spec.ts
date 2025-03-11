@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ArtistItemComponent } from './artist-item.component';
 import { By } from '@angular/platform-browser';
+import { ArtistItemComponent } from './artist-item.component';
 
 describe('ArtistItemComponent', () => {
   let component: ArtistItemComponent;
@@ -31,7 +31,7 @@ describe('ArtistItemComponent', () => {
 
   it('should emit on click event', () => {
     const component = fixture.componentInstance;
-    spyOn(component.click, 'emit');
+    jest.spyOn(component.click, 'emit');
 
     const element = fixture.debugElement.query(By.css('[data-testid="artist-item"]'));
     element.nativeElement.click();

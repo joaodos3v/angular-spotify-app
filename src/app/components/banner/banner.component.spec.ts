@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BannerComponent } from './banner.component';
 import { By } from '@angular/platform-browser';
+import { BannerComponent } from './banner.component';
 
 describe('BannerComponent', () => {
   let component: BannerComponent;
@@ -27,7 +27,7 @@ describe('BannerComponent', () => {
     fixture.detectChanges();
 
     const result = fixture.debugElement.query(By.css('[data-testid="banner-image"]'));
-    expect(result.attributes['style']).toContain('background-image: url("myImage.png");');
+    expect(result.attributes['style']).toContain('background-image: url(myImage.png);');
   });
 
   it('should render text received as prop', () => {

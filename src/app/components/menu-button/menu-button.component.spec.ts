@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuButtonComponent } from './menu-button.component';
 import { By } from '@angular/platform-browser';
+import { MenuButtonComponent } from './menu-button.component';
 
 describe('MenuButtonComponent', () => {
   let component: MenuButtonComponent;
@@ -36,7 +36,7 @@ describe('MenuButtonComponent', () => {
     fixture.detectChanges();
 
     const result = fixture.debugElement.query(By.css('[data-testid="menu-button"]'));
-    expect(result.classes['selected']).toBeTrue();
+    expect(result.classes['selected']).toBe(true);
   });
 
   it('should emit on click event', () => {
